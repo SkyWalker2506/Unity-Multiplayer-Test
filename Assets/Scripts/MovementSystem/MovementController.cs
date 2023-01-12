@@ -13,7 +13,7 @@ namespace Game.MovementSystem
             _objectTransform = objectTransform;
         }
         
-        public void Move(Vector2 moveVector)
+        public void Move(Vector3 moveVector)
         {
             _objectTransform.Translate(moveVector);
         }
