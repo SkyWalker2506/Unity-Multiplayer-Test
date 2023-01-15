@@ -165,6 +165,7 @@ MonoBehaviour:
     LookCamera: {fileID: 5401301173397950225}
     MovementSpeed: 5
     LookSensitivity: 25
+    LookAngle: {x: -90, y: 90}
 --- !u!1 &8349991575381903980
 GameObject:
   m_ObjectHideFlags: 0

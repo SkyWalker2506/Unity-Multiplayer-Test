@@ -7,4 +7,5 @@ public struct PlayerData
     public Transform LookCamera;
     public float MovementSpeed;
     public float LookSensitivity;
+    public Vector2 LookAngle;
 }

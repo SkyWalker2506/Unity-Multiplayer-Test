@@ -17,7 +17,7 @@ public class PlayerBehaviour : NetworkBehaviour
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
         _movementLogic = new TransformMovement(transform,_playerData.MovementSpeed);
-        _lookLogic = new TransformLook(transform, _playerData.LookCamera, _playerData.LookSensitivity);
+        _lookLogic = new TransformLook(transform, _playerData.LookCamera, _playerData.LookSensitivity, _playerData.LookAngle);
     }
 
     private void Start()

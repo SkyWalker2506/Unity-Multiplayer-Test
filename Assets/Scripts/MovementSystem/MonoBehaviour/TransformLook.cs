@@ -7,15 +7,17 @@ namespace Game.MovementSystem
         public Transform Transform { get; }
         public Transform Camera { get; }
         public float LookSensitivity { get; }
+        public Vector2 LookAngle { get; }
 
         private float _xRotation;
 
-        public TransformLook(Transform transform, Transform camera, float lookSensitivity)
+        public TransformLook(Transform transform, Transform camera, float lookSensitivity, Vector2 lookAngle)
         {
             Transform = transform;
             Camera = camera;
             LookSensitivity = lookSensitivity;
             _xRotation = Transform.localRotation.eulerAngles.x;
+            LookAngle = lookAngle;
         }
 
         public void Look(Vector2 rotationDelta)
@@ -26,7 +28,7 @@ namespace Game.MovementSystem
 
         private void UpdateXAxis(float xDelta)
         {
-            _xRotation = Mathf.Clamp(_xRotation - xDelta,-90,90);
+            _xRotation = Mathf.Clamp(_xRotation - xDelta,LookAngle.x,LookAngle.y);
             Camera.localRotation = Quaternion.Euler(_xRotation,0,0);
         }
 
