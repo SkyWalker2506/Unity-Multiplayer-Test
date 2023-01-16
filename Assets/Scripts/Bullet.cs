@@ -1,17 +1,32 @@
 ﻿using System;
 using CombatSystem;
+using Game.MovementSystem;
 using PoolSystem;
 using UnityEngine;
 
-public class Bullet : PoolObj , IDamager
+public class Bullet : PoolObjTimeReleaser , IDamager
 {
-    [SerializeField] private Material _bulletMaterial;
+    public int Damage { get; }
+    public Action<int> OnDamage { get; set; }
+    
+    [SerializeField] private float _bulletSpeed = 5;
+    [SerializeField] private MeshRenderer _bulletRenderer;
     [SerializeField] private float _smallBulletSize = .5f;
     [SerializeField] private float _standardBulletSize = 1f;
     [SerializeField] private float _largeBulletSize = 2;
-    public int Damage { get; }
-    public Action<int> OnDamage { get; set; }
+    
+    private IMovementLogic _movementLogic;
 
+
+    private void Awake()
+    {
+        _movementLogic = new TransformMovement(transform, _bulletSpeed);
+    }
+
+    private void Update()
+    {
+        _movementLogic.Move(transform.forward);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -49,13 +64,13 @@ public class Bullet : PoolObj , IDamager
         switch (color)
         {
             case BulletColor.Blue:
-                _bulletMaterial.color = Color.blue;
+                _bulletRenderer.material.color = Color.blue;
                 break;
             case BulletColor.Red:
-                _bulletMaterial.color = Color.red;
+                _bulletRenderer.material.color = Color.red;
                 break;
             case BulletColor.Green:
-                _bulletMaterial.color = Color.green;
+                _bulletRenderer.material.color = Color.green;
                 break;
         }
     }

@@ -31,7 +31,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""b12a11ce-1b2d-4d23-9b1d-35ea105eefdd"",
-                    ""expectedControlType"": ""Vector3"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2),Hold"",
                     ""initialStateCheck"": true
@@ -53,13 +53,49 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousSize"",
+                    ""type"": ""Button"",
+                    ""id"": ""f531b62c-09b1-4356-9ee3-25b2b1afb531"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextSize"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f674fe6-236f-48ac-9e6f-d40d455a068d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousColor"",
+                    ""type"": ""Button"",
+                    ""id"": ""15cc5f61-ee57-4e81-9c60-4f34865dd68b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextColor"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb63b82a-bb43-48c4-b187-08da87313d9e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": ""WASD"",
                     ""id"": ""00ca640b-d935-4593-8157-c05846ea39b3"",
-                    ""path"": ""3DVector"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -68,7 +104,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""forward"",
+                    ""name"": ""Up"",
                     ""id"": ""e2062cb9-1b15-46a2-838c-2f8d72a0bdd9"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
@@ -79,7 +115,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Backward"",
+                    ""name"": ""Down"",
                     ""id"": ""2e46982e-44cc-431b-9f0b-c11910bf467a"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
@@ -198,6 +234,50 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b14d355-c771-45a6-b84d-c6ec0870ef8b"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PreviousSize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5239585b-9d2c-4cc0-b744-0d343bd313d5"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""NextSize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02a30c4c-e80e-4618-8ebd-8f3e8b3ecca9"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PreviousColor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5af99551-ddde-48a5-b946-ff7a6591c4fd"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""NextColor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -270,6 +350,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_PreviousSize = m_Player.FindAction("PreviousSize", throwIfNotFound: true);
+        m_Player_NextSize = m_Player.FindAction("NextSize", throwIfNotFound: true);
+        m_Player_PreviousColor = m_Player.FindAction("PreviousColor", throwIfNotFound: true);
+        m_Player_NextColor = m_Player.FindAction("NextColor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -332,6 +416,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_PreviousSize;
+    private readonly InputAction m_Player_NextSize;
+    private readonly InputAction m_Player_PreviousColor;
+    private readonly InputAction m_Player_NextColor;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -339,6 +427,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @PreviousSize => m_Wrapper.m_Player_PreviousSize;
+        public InputAction @NextSize => m_Wrapper.m_Player_NextSize;
+        public InputAction @PreviousColor => m_Wrapper.m_Player_PreviousColor;
+        public InputAction @NextColor => m_Wrapper.m_Player_NextColor;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -357,6 +449,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @PreviousSize.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousSize;
+                @PreviousSize.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousSize;
+                @PreviousSize.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousSize;
+                @NextSize.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextSize;
+                @NextSize.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextSize;
+                @NextSize.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextSize;
+                @PreviousColor.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousColor;
+                @PreviousColor.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousColor;
+                @PreviousColor.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPreviousColor;
+                @NextColor.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextColor;
+                @NextColor.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextColor;
+                @NextColor.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNextColor;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -370,6 +474,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @PreviousSize.started += instance.OnPreviousSize;
+                @PreviousSize.performed += instance.OnPreviousSize;
+                @PreviousSize.canceled += instance.OnPreviousSize;
+                @NextSize.started += instance.OnNextSize;
+                @NextSize.performed += instance.OnNextSize;
+                @NextSize.canceled += instance.OnNextSize;
+                @PreviousColor.started += instance.OnPreviousColor;
+                @PreviousColor.performed += instance.OnPreviousColor;
+                @PreviousColor.canceled += instance.OnPreviousColor;
+                @NextColor.started += instance.OnNextColor;
+                @NextColor.performed += instance.OnNextColor;
+                @NextColor.canceled += instance.OnNextColor;
             }
         }
     }
@@ -424,5 +540,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnPreviousSize(InputAction.CallbackContext context);
+        void OnNextSize(InputAction.CallbackContext context);
+        void OnPreviousColor(InputAction.CallbackContext context);
+        void OnNextColor(InputAction.CallbackContext context);
     }
 }

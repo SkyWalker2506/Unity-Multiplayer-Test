@@ -17,7 +17,7 @@ namespace Game.MovementSystem
         
         public void Move(Vector3 moveVector)
         {
-            Transform.Translate(moveVector * (MovementSpeed * Time.deltaTime));
+            Transform.position += moveVector * (MovementSpeed * Time.deltaTime);
         }
     }
 }

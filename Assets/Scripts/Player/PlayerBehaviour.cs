@@ -1,4 +1,4 @@
-using System;
+using CombatSystem;
 using Game.MovementSystem;
 using Unity.Netcode;
 using UnityEngine;
@@ -6,11 +6,13 @@ using UnityEngine;
 public class PlayerBehaviour : NetworkBehaviour
 {
     [SerializeField] private PlayerData _playerData;
+    [SerializeField] private Weapon _weapon;
     private PlayerInputActions _playerInputActions;
     private IMovementLogic _movementLogic;
     private ILookLogic _lookLogic;
-    private Vector3 _moveVector;
+    private Vector2 _moveVector;
     private Vector2 _lookVector;
+    
     
     private void Awake()
     {
@@ -25,22 +27,24 @@ public class PlayerBehaviour : NetworkBehaviour
         _playerData.LookCamera.gameObject.SetActive(IsOwner);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (IsOwner)
         {
             OnMove();
             OnLook();
+            OnBulletChanged();
+            OnFire();
         }
     }
 
     private void OnMove()
     {
-        _moveVector = _playerInputActions.Player.Movement.ReadValue<Vector3>();
+        _moveVector = _playerInputActions.Player.Movement.ReadValue<Vector2>();
         Debug.Log(_moveVector);
-        if (_moveVector != Vector3.zero)
+        if (_moveVector != Vector2.zero)
         {
-            _movementLogic.Move(_moveVector);
+            _movementLogic.Move(transform.right * _moveVector.x + transform.forward * _moveVector.y);
         }
     }
     
@@ -53,4 +57,34 @@ public class PlayerBehaviour : NetworkBehaviour
             _lookLogic.Look(_lookVector);
         }
     }
+
+    private void OnBulletChanged()
+    {
+        if (_playerInputActions.Player.PreviousSize.WasPressedThisFrame())
+        {
+            _weapon.PreviousSize();
+        }
+        else if (_playerInputActions.Player.NextSize.WasPressedThisFrame())
+        {
+            _weapon.NextSize();
+        }
+        else if (_playerInputActions.Player.PreviousColor.WasPressedThisFrame())
+        {
+            _weapon.PreviousColor();
+        }
+        else if (_playerInputActions.Player.NextColor.WasPressedThisFrame())
+        {
+            _weapon.NextColor();
+        }
+    }
+
+    private void OnFire()
+    {
+        if (_playerInputActions.Player.Fire.WasPressedThisFrame())
+        {
+            _weapon.Attack();
+        }
+    }
+    
+    
 }
