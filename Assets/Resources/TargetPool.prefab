@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1025003138928511365}
   - component: {fileID: 4716474821614254570}
   m_Layer: 0
-  m_Name: BulletPool
+  m_Name: TargetPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c3d11b4dd9d68c43bd50fd572ec3025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolObjPrefab: {fileID: 7848604460994067417, guid: 166c10f299c0acd42b76b81ab2baabbf, type: 3}
+  _poolObjPrefab: {fileID: 7671594231899858417, guid: 036f5fd4b2f8bb94c9ecb3f248e26223, type: 3}
   _firstCreatedAmount: 100
   _batchAmount: 25

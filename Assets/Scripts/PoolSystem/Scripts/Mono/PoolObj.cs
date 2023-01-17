@@ -8,6 +8,11 @@ namespace PoolSystem
 
         public IPool Pool { get; set; }
 
+        public virtual void Initialize()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Release()
         {
             Pool.Return(this);

@@ -113,6 +113,6 @@ MonoBehaviour:
   releaseTime: 5
   _bulletSpeed: 15
   _bulletRenderer: {fileID: 3147084636018670625}
-  _smallBulletSize: 0.15
+  _smallBulletSize: 0.1
   _standardBulletSize: 0.25
-  _largeBulletSize: 0.35
+  _largeBulletSize: 0.5

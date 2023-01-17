@@ -6,6 +6,7 @@ namespace PoolSystem
     {
         Transform Transform { get; }
         IPool Pool { get; set; }
+        void Initialize();
         void Release();
 
     }

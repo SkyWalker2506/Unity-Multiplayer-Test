@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FactorySystem;
+using UnityEngine;
 
 namespace CombatSystem
 {

@@ -11,12 +11,17 @@ namespace PoolSystem
 
         private void OnEnable()
         {
-            Invoke(nameof(Release), releaseTime);
+            Initialize();
         }
 
         private void OnDisable()
         {
             CancelInvoke();
+        }
+
+        public void Initialize()
+        {
+            Invoke(nameof(Release), releaseTime);
         }
 
         public void Release()

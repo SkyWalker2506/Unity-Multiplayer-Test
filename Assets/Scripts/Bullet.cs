@@ -4,6 +4,7 @@ using Game.MovementSystem;
 using PoolSystem;
 using UnityEngine;
 
+
 public class Bullet : PoolObjTimeReleaser , IDamager
 {
     public int Damage { get; }
