@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace PoolSystem
 {
     public class PoolObjTimeReleaser : MonoBehaviour, IPoolObj
     {
+        public Action<IPoolObj> OnRelease { get; set; }
         public Transform Transform => transform;
 
         public IPool Pool { get; set; }
@@ -26,6 +28,7 @@ namespace PoolSystem
 
         public void Release()
         {
+            OnRelease?.Invoke(this);
             Pool.Return(this);
         }
     }
