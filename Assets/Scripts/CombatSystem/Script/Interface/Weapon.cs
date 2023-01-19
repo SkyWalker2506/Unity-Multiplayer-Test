@@ -1,9 +1,10 @@
 ﻿using FactorySystem;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace CombatSystem
 {
-    public class Weapon : MonoBehaviour
+    public class Weapon : NetworkBehaviour
     {
         [SerializeField] private Transform _weaponTip;
         private IWeaponLogic _weaponLogic;

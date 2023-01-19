@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace PoolSystem
 {
+    
     public class Pool : MonoBehaviour, IPool
     {
         [SerializeField] private GameObject _poolObjPrefab;
         [SerializeField] private int _firstCreatedAmount = 100;
         [SerializeField] private int _batchAmount = 25;
-
 
         public Stack<IPoolObj> AvailableObjects { get; set; }
 
@@ -31,9 +31,11 @@ namespace PoolSystem
         {
             for (int i = 0; i < amount; i++)
             {
-                var poolObj = Instantiate(_poolObjPrefab).GetComponent<IPoolObj>();
-                ((MonoBehaviour)poolObj).gameObject.SetActive(false);
-                poolObj.Pool = this;
+                IPoolObj poolObj = Instantiate(_poolObjPrefab).GetComponent<IPoolObj>();
+                GameObject go = ((MonoBehaviour)poolObj).gameObject;
+                go.SetActive(false);
+                go.name = _poolObjPrefab.name;
+                poolObj.Initialize(this);
                 AvailableObjects.Push(poolObj);
             }
         }
@@ -44,7 +46,7 @@ namespace PoolSystem
             {
                 CreateBatch(_batchAmount);
             }
-            var obj = AvailableObjects.Pop();
+            IPoolObj obj = AvailableObjects.Pop();
             OnGettingObject(obj);
             return obj;
         }
@@ -62,13 +64,13 @@ namespace PoolSystem
 
         public void OnGettingObject(IPoolObj poolObj)
         {
-            var obj = ((MonoBehaviour)poolObj).gameObject;
+            GameObject obj = ((MonoBehaviour)poolObj).gameObject;
             obj.SetActive(true);
         }
 
         public void OnReturningObject(IPoolObj poolObj)
         {
-            var obj = ((MonoBehaviour)poolObj).gameObject;
+            GameObject obj = ((MonoBehaviour)poolObj).gameObject;
             obj.SetActive(false);
         }
     }

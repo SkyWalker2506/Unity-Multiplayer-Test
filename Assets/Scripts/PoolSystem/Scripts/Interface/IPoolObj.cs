@@ -7,8 +7,8 @@ namespace PoolSystem
     {
         Action<IPoolObj> OnRelease { get; set; }
         Transform Transform { get; }
-        IPool Pool { get; set; }
-        void Initialize();
+        IPool Pool { get;}
+        void Initialize(IPool pool);
         void Release();
 
     }

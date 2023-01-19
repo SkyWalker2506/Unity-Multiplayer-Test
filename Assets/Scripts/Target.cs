@@ -2,14 +2,9 @@
 using CombatSystem;
 using PoolSystem;
 
-public class Target : PoolObj, IDamagable
+public class Target : NetworkPoolObj, IDamagable
 {
     public Action<int> OnDamaged { get; set; }
-
-    public override void Initialize()
-    {
-        
-    }
 
     public void ApplyDamage(int damage)
     {

@@ -1,4 +1,3 @@
-using System;
 using FactorySystem;
 using Unity.Netcode;
 using UnityEngine;
@@ -7,15 +6,21 @@ public class SpawnBehaviour : NetworkBehaviour
 {
     [SerializeField] private SpawnData _spawnData;
     private ISpawnLogic _spawnLogic;
-
-    private void OnEnable()
+    
+    private void Start()
     {
-        NetworkManager.OnServerStarted += Spawn;
+        if (NetworkManager.Singleton)
+        {        
+            NetworkManager.Singleton.OnServerStarted += Spawn;
+        }
     }
 
     private void OnDisable()
     {
-        NetworkManager.OnServerStarted -= Spawn;
+        if (NetworkManager.Singleton)
+        {
+            NetworkManager.Singleton.OnServerStarted -= Spawn;
+        }
     }
 
     private void Spawn()

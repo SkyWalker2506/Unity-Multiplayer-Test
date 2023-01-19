@@ -10,8 +10,9 @@ namespace PoolSystem
 
         public IPool Pool { get; set; }
 
-        public virtual void Initialize()
+        public virtual void Initialize(IPool pool)
         {
+            Pool = pool;
         }
 
         public void Release()

@@ -5,7 +5,7 @@ using PoolSystem;
 using UnityEngine;
 
 
-public class Bullet : PoolObjTimeReleaser , IDamager
+public class Bullet : NetworkPoolObjTimeReleaser , IDamager
 {
     public int Damage { get; }
     public Action<int> OnDamage { get; set; }
