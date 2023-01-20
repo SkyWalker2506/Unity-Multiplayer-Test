@@ -33,9 +33,4 @@ namespace FactorySystem
         }
 
     }
-
-    public interface IPoolFactory
-    {
-        IPoolObj GetPoolObj();
-    }
 }

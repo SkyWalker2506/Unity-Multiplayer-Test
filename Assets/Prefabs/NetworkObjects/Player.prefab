@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 6655724909216796480}
   - component: {fileID: 628334066575619030}
   - component: {fileID: 2910415547015655561}
-  - component: {fileID: 8841787670290710593}
+  - component: {fileID: 7037277435875364874}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -169,7 +169,7 @@ MonoBehaviour:
     LookSensitivity: 25
     LookAngle: {x: -30, y: 30}
   _weapon: {fileID: 8039181814750333908}
---- !u!114 &8841787670290710593
+--- !u!114 &7037277435875364874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6655724909216796487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
