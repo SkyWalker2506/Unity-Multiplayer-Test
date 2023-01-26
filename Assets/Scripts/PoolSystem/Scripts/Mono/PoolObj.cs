@@ -7,7 +7,6 @@ namespace PoolSystem
     {
         public Action<IPoolObj> OnRelease { get; set; }
         public Transform Transform => transform;
-
         public IPool Pool { get; set; }
 
         public virtual void Initialize(IPool pool)
@@ -15,10 +14,9 @@ namespace PoolSystem
             Pool = pool;
         }
 
-        public void Release()
+        public virtual void Release()
         {
-            OnRelease?.Invoke(this);
-            Pool.Return(this);
+            Pool.Return(this as IPoolObj);
         }
     }
 }

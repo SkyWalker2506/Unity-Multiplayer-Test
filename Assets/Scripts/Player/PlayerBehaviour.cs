@@ -41,7 +41,7 @@ public class PlayerBehaviour : NetworkBehaviour
     private void OnMove()
     {
         _moveVector = _playerInputActions.Player.Movement.ReadValue<Vector2>();
-        Debug.Log(_moveVector);
+//        Debug.Log(_moveVector);
         if (_moveVector != Vector2.zero)
         {
             _movementLogic.Move(transform.right * _moveVector.x + transform.forward * _moveVector.y);
@@ -51,7 +51,7 @@ public class PlayerBehaviour : NetworkBehaviour
     private void OnLook()
     {
         _lookVector = _playerInputActions.Player.Look.ReadValue<Vector2>();
-        Debug.Log(_lookVector);
+//        Debug.Log(_lookVector);
         if (_lookVector != Vector2.zero)
         {
             _lookLogic.Look(_lookVector);

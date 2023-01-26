@@ -10,7 +10,16 @@ namespace PoolSystem
         {
             base.Initialize(pool);
             NetworkObject = Transform.GetComponent<NetworkObject>();
-            NetworkObject.Spawn();
+            NetworkObject.Spawn(true);
+        }
+
+        public override void Release()
+        {
+            base.Release();
+            if(NetworkObject.IsSpawned)
+            {
+                NetworkObject.Despawn(false);
+            }
         }
     }
 }

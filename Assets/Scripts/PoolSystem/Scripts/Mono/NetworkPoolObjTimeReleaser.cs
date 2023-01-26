@@ -1,4 +1,6 @@
-﻿using Unity.Netcode;
+﻿using FactorySystem;
+using Unity.Netcode;
+using UnityEngine;
 
 namespace PoolSystem
 {
@@ -8,9 +10,30 @@ namespace PoolSystem
         
         public override void Initialize(IPool pool)
         {
-            base.Initialize(pool);
+            InitializeServerRpc();
+            ReleaseServerRpc();
+        }
+        
+        [ServerRpc]
+        private void InitializeServerRpc()
+        {
+            Debug.Log("Initialized", gameObject);
+            Pool = BulletFactory.Instance.Pool;
             NetworkObject = Transform.GetComponent<NetworkObject>();
             NetworkObject.Spawn(true);
+        }
+        
+        public override void Release()
+        {
+            ReleaseServerRpc();
+        }
+        
+        [ServerRpc]
+        private void ReleaseServerRpc()
+        {
+            Debug.Log("ReleaseServerRpc", gameObject);
+            //Pool.Return(this);
+            //NetworkObject.Despawn(false);
         }
     }
 }

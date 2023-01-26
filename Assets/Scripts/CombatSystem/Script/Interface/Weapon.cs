@@ -35,7 +35,14 @@ namespace CombatSystem
 
         public void Attack()
         {
-            _weaponLogic.Attack();
+            if (IsHost)
+            {
+                _weaponLogic.Attack();
+            }
+            else
+            {
+                
+            }
         }
     }
 }

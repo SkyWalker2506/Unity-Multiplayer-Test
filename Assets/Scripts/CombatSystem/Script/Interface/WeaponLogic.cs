@@ -47,7 +47,7 @@ namespace CombatSystem
 
         public void Attack()
         {
-            Transform bulletTransform= BulletFactory.GetBullet(CurrentBulletData).transform;
+            Transform bulletTransform = BulletFactory.GetBullet(CurrentBulletData).transform;
             bulletTransform.position = WeaponTip.position;
             bulletTransform.rotation = WeaponTip.rotation;
         }

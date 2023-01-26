@@ -8,6 +8,6 @@ public class Target : NetworkPoolObj, IDamagable
 
     public void ApplyDamage(int damage)
     {
-        Release();
+            Release();
     }
 }

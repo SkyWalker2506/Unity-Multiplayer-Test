@@ -4,7 +4,6 @@ using Game.MovementSystem;
 using PoolSystem;
 using UnityEngine;
 
-
 public class Bullet : NetworkPoolObjTimeReleaser , IDamager
 {
     public int Damage { get; }
@@ -31,8 +30,7 @@ public class Bullet : NetworkPoolObjTimeReleaser , IDamager
 
     private void OnTriggerEnter(Collider other)
     {
-        IDamagable damagable;
-        if (other.TryGetComponent<IDamagable>(out damagable))
+        if (other.TryGetComponent(out IDamagable damagable))
         {
             ApplyDamage(damagable);
         }

@@ -11,25 +11,25 @@ namespace FactorySystem
         private static readonly Lazy<T> _lazy = new Lazy<T>(() => new T());
     
 
-        IPool _poolInstance;
-        private IPool _pool
+        IPool _pool;
+        public IPool Pool
         {
             get
             {
-                if (_poolInstance == null)
+                if (_pool == null)
                 {
-                    _poolInstance = Resources.Load<Pool>(PoolPath);
-                    _poolInstance.Initialize();
+                    _pool = Resources.Load<Pool>(PoolPath);
+                    _pool.Initialize();
                 }
 
-                return _poolInstance;
+                return _pool;
             }
         }
 
 
         public IPoolObj GetPoolObj()
         {
-            return _pool.Get();
+            return Pool.Get();
         }
 
     }
