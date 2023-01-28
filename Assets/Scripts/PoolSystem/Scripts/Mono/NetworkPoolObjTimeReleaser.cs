@@ -18,7 +18,7 @@ namespace PoolSystem
         private void InitializeServerRpc()
         {
             Debug.Log("Initialized", gameObject);
-            Pool = BulletFactory.Instance.Pool;
+            Pool = PoolBulletFactory.Instance.Pool;
             NetworkObject = Transform.GetComponent<NetworkObject>();
             NetworkObject.Spawn(true);
         }
@@ -32,8 +32,8 @@ namespace PoolSystem
         private void ReleaseServerRpc()
         {
             Debug.Log("ReleaseServerRpc", gameObject);
-            //Pool.Return(this);
-            //NetworkObject.Despawn(false);
+            Pool.Return(this);
+            NetworkObject.Despawn(false);
         }
     }
 }

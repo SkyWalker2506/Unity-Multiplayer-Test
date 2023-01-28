@@ -5,7 +5,7 @@ namespace CombatSystem
 {
     public interface IWeaponLogic : ICanAttack
     {
-        BulletFactory BulletFactory { get; }
+        IBulletFactory BulletFactory { get; }
         BulletData CurrentBulletData { get; }
         Transform WeaponTip{ get; }
         void PreviousSize();

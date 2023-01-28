@@ -8,9 +8,10 @@ namespace CombatSystem
     {
         [SerializeField] private Transform _weaponTip;
         private IWeaponLogic _weaponLogic;
+        
         private void Awake()
         {
-            _weaponLogic = new WeaponLogic(BulletFactory.Instance, new BulletData(),_weaponTip);
+            _weaponLogic = new WeaponLogic(NetworkBulletFactory.Instance, new BulletData(),_weaponTip);
         }
         
         public void PreviousSize()
@@ -35,14 +36,7 @@ namespace CombatSystem
 
         public void Attack()
         {
-            if (IsHost)
-            {
                 _weaponLogic.Attack();
-            }
-            else
-            {
-                
-            }
         }
     }
 }

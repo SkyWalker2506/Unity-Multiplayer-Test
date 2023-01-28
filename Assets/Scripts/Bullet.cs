@@ -2,9 +2,10 @@
 using CombatSystem;
 using Game.MovementSystem;
 using PoolSystem;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Bullet : NetworkPoolObjTimeReleaser , IDamager
+public class Bullet : NetworkBehaviour , IDamager
 {
     public int Damage { get; }
     public Action<int> OnDamage { get; set; }
@@ -16,7 +17,6 @@ public class Bullet : NetworkPoolObjTimeReleaser , IDamager
     [SerializeField] private float _largeBulletSize = 2;
     
     private IMovementLogic _movementLogic;
-
 
     private void Awake()
     {
@@ -78,6 +78,5 @@ public class Bullet : NetworkPoolObjTimeReleaser , IDamager
     {
         damagable.ApplyDamage(Damage);
         OnDamage?.Invoke(Damage);
-        Release();
     }
 }

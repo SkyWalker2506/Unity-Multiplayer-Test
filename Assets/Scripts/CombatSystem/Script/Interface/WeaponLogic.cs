@@ -1,20 +1,20 @@
 ﻿using System;
 using FactorySystem;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace CombatSystem
 {
     public class WeaponLogic : IWeaponLogic
     {
-        public BulletFactory BulletFactory { get; }
+        public IBulletFactory BulletFactory { get; }
         public BulletData CurrentBulletData => _currentBulletData;
         public Transform WeaponTip { get; }
-        
         private int _bulletSizeCount => Enum.GetValues(typeof(BulletSize)).Length;
         private int _bulletColorCount => Enum.GetValues(typeof(BulletColor)).Length;
         BulletData _currentBulletData;
 
-        public WeaponLogic(BulletFactory bulletFactory, BulletData bulletData, Transform weaponTip)
+        public WeaponLogic(IBulletFactory bulletFactory, BulletData bulletData, Transform weaponTip)
         {
             BulletFactory = bulletFactory;
             _currentBulletData = bulletData;
@@ -47,9 +47,13 @@ namespace CombatSystem
 
         public void Attack()
         {
-            Transform bulletTransform = BulletFactory.GetBullet(CurrentBulletData).transform;
-            bulletTransform.position = WeaponTip.position;
-            bulletTransform.rotation = WeaponTip.rotation;
+            AttackServerRpc();
+        }
+        
+        [ServerRpc]
+        public void AttackServerRpc()
+        {
+            BulletFactory.CreateBullet(CurrentBulletData, WeaponTip.position, WeaponTip.rotation);
         }
     }
 }
