@@ -1,22 +1,24 @@
 ﻿using System;
-using FactorySystem;
 using Unity.Netcode;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CombatSystem
 {
     public class WeaponLogic : IWeaponLogic
     {
-        public IBulletFactory BulletFactory { get; }
+        private NetworkBehaviour _owner;
+        private Bullet _bulletPrefab { get; }
         public BulletData CurrentBulletData => _currentBulletData;
         public Transform WeaponTip { get; }
         private int _bulletSizeCount => Enum.GetValues(typeof(BulletSize)).Length;
         private int _bulletColorCount => Enum.GetValues(typeof(BulletColor)).Length;
         BulletData _currentBulletData;
 
-        public WeaponLogic(IBulletFactory bulletFactory, BulletData bulletData, Transform weaponTip)
+        public WeaponLogic(NetworkBehaviour owner, Bullet bulletPrefab, BulletData bulletData, Transform weaponTip)
         {
-            BulletFactory = bulletFactory;
+            _owner = owner;
+            _bulletPrefab = bulletPrefab;
             _currentBulletData = bulletData;
             WeaponTip = weaponTip;
         }
@@ -47,13 +49,27 @@ namespace CombatSystem
 
         public void Attack()
         {
-            AttackServerRpc();
+                CreateBulletServerRpc((int)CurrentBulletData.Color, (int)CurrentBulletData.Size,WeaponTip.position,WeaponTip.rotation);
         }
         
-        [ServerRpc]
-        public void AttackServerRpc()
+        [ServerRpc(RequireOwnership = false)]
+        private void CreateBulletServerRpc(int colorIndex, int sizeIndex, Vector3 position, Quaternion rotation)
         {
-            BulletFactory.CreateBullet(CurrentBulletData, WeaponTip.position, WeaponTip.rotation);
+            Debug.Log(colorIndex+ "  color index");
+            Debug.Log(sizeIndex+ "  size index");
+          //  if (!NetworkManager.Singleton.IsHost) return;
+            Bullet bullet = Object.Instantiate(_bulletPrefab);
+            bullet.transform.position = position;
+            bullet.transform.rotation = rotation;
+            bullet.NetworkObject.Spawn();
+            SetBulletClientRpc(bullet.NetworkObjectId, colorIndex, sizeIndex);
+        }
+        
+        [ClientRpc]
+        private void SetBulletClientRpc(ulong id, int colorIndex, int sizeIndex)
+        {
+            Debug.Log("SetBulletClientRpc");
+            NetworkManager.Singleton.SpawnManager.SpawnedObjects[id].GetComponent<Bullet>().SetBullet(new BulletData((BulletColor)colorIndex, (BulletSize)sizeIndex));
         }
     }
 }

@@ -1,17 +1,18 @@
-﻿using FactorySystem;
-using Unity.Netcode;
+﻿using Unity.Netcode;
 using UnityEngine;
 
 namespace CombatSystem
 {
-    public class Weapon : NetworkBehaviour
+    public class Weapon : MonoBehaviour
     {
+        [SerializeField] private NetworkBehaviour _owner;
+        [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private Transform _weaponTip;
         private IWeaponLogic _weaponLogic;
         
         private void Awake()
         {
-            _weaponLogic = new WeaponLogic(NetworkBulletFactory.Instance, new BulletData(),_weaponTip);
+            _weaponLogic = new WeaponLogic(_owner,_bulletPrefab, new BulletData(),_weaponTip);
         }
         
         public void PreviousSize()
@@ -36,7 +37,7 @@ namespace CombatSystem
 
         public void Attack()
         {
-                _weaponLogic.Attack();
+            _weaponLogic.Attack();
         }
     }
 }

@@ -1,8 +1,7 @@
-using FactorySystem;
 using Unity.Netcode;
 using UnityEngine;
 
-public class SpawnBehaviour : NetworkBehaviour
+public abstract class SpawnBehaviour : NetworkBehaviour
 {
     [SerializeField] private SpawnData _spawnData;
     private ISpawnLogic _spawnLogic;
@@ -23,11 +22,13 @@ public class SpawnBehaviour : NetworkBehaviour
         }
     }
 
+    protected abstract INetworkSpawn NetworkSpawn();
+
     private void Spawn()
     {
         if (IsHost)
         {
-            _spawnLogic = new SpawnLogic(transform, TargetFactory.Instance, _spawnData);
+            _spawnLogic = new NetworkSpawnLogic(transform, NetworkSpawn(), _spawnData);
             _spawnLogic.Initialize();
         }
     }

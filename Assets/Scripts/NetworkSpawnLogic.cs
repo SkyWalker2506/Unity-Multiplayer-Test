@@ -1,25 +1,26 @@
 ﻿using System.Collections.Generic;
-using FactorySystem;
-using PoolSystem;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
-public class SpawnLogic : ISpawnLogic
+public class NetworkSpawnLogic : ISpawnLogic
 {
     private readonly Transform _spawnerTransform;
-    private readonly IPoolFactory _poolFactory;
+    private readonly INetworkSpawn _spawnPrefab;
     private readonly SpawnData _spawnData;
-    private List<IPoolObj> _spawnedObjects;
+    private List<INetworkSpawn> _spawnedObjects;
 
-    public SpawnLogic(Transform spawnerTransform, IPoolFactory PoolFactory, SpawnData spawnData)
+    public NetworkSpawnLogic(Transform spawnerTransform, INetworkSpawn spawnPrefab, SpawnData spawnData)
     {
         _spawnerTransform = spawnerTransform;
-        _poolFactory = PoolFactory;
+        _spawnPrefab = spawnPrefab;
+        _spawnPrefab = spawnPrefab;
         _spawnData = spawnData;
     }
 
     public void Initialize()
     {
-        _spawnedObjects = new List<IPoolObj>();
+        _spawnedObjects = new List<INetworkSpawn>();
         for (int i = 0; i < _spawnData.MaxSpawnCount; i++)
         {
             SpawnObject();
@@ -28,10 +29,11 @@ public class SpawnLogic : ISpawnLogic
 
     private void SpawnObject()
     {
-        IPoolObj spawnObj = _poolFactory.GetPoolObj();
+        INetworkSpawn spawnObj = Object.Instantiate((MonoBehaviour)_spawnPrefab).GetComponent<INetworkSpawn>();
         spawnObj.Transform.position = GetRandomPosition();
-        spawnObj.OnRelease += OnSpawnReleased;
+        spawnObj.NetworkObj.Spawn();
         _spawnedObjects.Add(spawnObj);
+        spawnObj.OnDespawned += ()=> OnDespawn(spawnObj);
     }
 
     private Vector3 GetRandomPosition()
@@ -59,10 +61,11 @@ public class SpawnLogic : ISpawnLogic
         return spawnPos;
     }
 
-    void OnSpawnReleased(IPoolObj poolObj)
+    void OnDespawn(INetworkSpawn networkSpawn)
     {
-        _spawnedObjects.Remove(poolObj);
-        poolObj.OnRelease -= OnSpawnReleased;
+        _spawnedObjects.Remove(networkSpawn);
+        networkSpawn.OnDespawned -= ()=> OnDespawn(networkSpawn);
+
         if (_spawnData.MaxSpawnCount > _spawnedObjects.Count)
         {
             SpawnObject();

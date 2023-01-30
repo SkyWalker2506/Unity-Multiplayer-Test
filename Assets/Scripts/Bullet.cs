@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using CombatSystem;
 using Game.MovementSystem;
-using PoolSystem;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -11,6 +11,7 @@ public class Bullet : NetworkBehaviour , IDamager
     public Action<int> OnDamage { get; set; }
     
     [SerializeField] private float _bulletSpeed = 5;
+    [SerializeField] private float _lifeTime = 5;
     [SerializeField] private MeshRenderer _bulletRenderer;
     [SerializeField] private float _smallBulletSize = .5f;
     [SerializeField] private float _standardBulletSize = 1f;
@@ -21,6 +22,7 @@ public class Bullet : NetworkBehaviour , IDamager
     private void Awake()
     {
         _movementLogic = new TransformMovement(transform, _bulletSpeed);
+        Invoke(nameof(Despawn),_lifeTime);
     }
 
     private void Update()
@@ -78,5 +80,14 @@ public class Bullet : NetworkBehaviour , IDamager
     {
         damagable.ApplyDamage(Damage);
         OnDamage?.Invoke(Damage);
+        Despawn();
+    }
+
+    private void Despawn()
+    {
+        if (IsSpawned)
+        {
+            NetworkObject.Despawn();
+        }
     }
 }
