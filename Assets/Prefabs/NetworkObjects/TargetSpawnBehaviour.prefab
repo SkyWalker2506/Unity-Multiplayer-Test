@@ -48,7 +48,7 @@ MonoBehaviour:
   _spawnData:
     MaxSpawnCount: 25
     MaxTry: 5
-    SpawnArea: 5
+    SpawnArea: 10
     MinSpawnDistance: 1
   _target: {fileID: 7671594231899858419, guid: 036f5fd4b2f8bb94c9ecb3f248e26223, type: 3}
 --- !u!114 &1066557367722106490

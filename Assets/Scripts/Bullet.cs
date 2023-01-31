@@ -40,8 +40,14 @@ public class Bullet : NetworkBehaviour , IDamager
 
     public void SetBullet(BulletData bulletData)
     {
-        SetBulletSize(bulletData.Size);
-        SetBulletColor(bulletData.Color);
+        SetBulletClientRpc((int)bulletData.Size, (int)bulletData.Color);
+    }
+
+    [ClientRpc]
+    private void SetBulletClientRpc(int size, int color)
+    {
+        SetBulletSize((BulletSize)size);
+        SetBulletColor((BulletColor)color);
     }
 
     void SetBulletSize(BulletSize size)

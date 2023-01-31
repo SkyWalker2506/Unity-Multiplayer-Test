@@ -60,19 +60,19 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         if (_playerInputActions.Player.PreviousSize.WasPressedThisFrame())
         {
-            _weapon.PreviousSize();
+            PreviousSizeServerRpc();
         }
         else if (_playerInputActions.Player.NextSize.WasPressedThisFrame())
         {
-            _weapon.NextSize();
+            NextSizeServerRpc();
         }
         else if (_playerInputActions.Player.PreviousColor.WasPressedThisFrame())
         {
-            _weapon.PreviousColor();
+            PreviousColorServerRpc();
         }
         else if (_playerInputActions.Player.NextColor.WasPressedThisFrame())
         {
-            _weapon.NextColor();
+            NextColorServerRpc();
         }
     }
 
@@ -80,14 +80,38 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         if (_playerInputActions.Player.Fire.WasPressedThisFrame())
         {
-            OnFireServerRpc();
+            AttackServerRpc();
         }
     }
 
     [ServerRpc]
-    private void OnFireServerRpc()
+    private void AttackServerRpc()
     {
         _weapon.Attack();
     }    
     
+    [ServerRpc]
+    private void NextSizeServerRpc()
+    {
+        _weapon.NextSize();
+    }  
+    
+    [ServerRpc]
+    private void PreviousSizeServerRpc()
+    {
+        _weapon.PreviousSize();
+    }  
+    
+    [ServerRpc]
+    private void NextColorServerRpc()
+    {
+        _weapon.NextColor();
+    }  
+    
+    [ServerRpc]
+    private void PreviousColorServerRpc()
+    {
+        _weapon.PreviousColor();
+    }  
+
 }
