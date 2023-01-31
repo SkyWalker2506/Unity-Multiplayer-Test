@@ -52,7 +52,7 @@ namespace CombatSystem
                 CreateBulletServerRpc((int)CurrentBulletData.Color, (int)CurrentBulletData.Size,WeaponTip.position,WeaponTip.rotation);
         }
         
-        [ServerRpc(RequireOwnership = false)]
+      //  [ServerRpc(RequireOwnership = false)]
         private void CreateBulletServerRpc(int colorIndex, int sizeIndex, Vector3 position, Quaternion rotation)
         {
             Debug.Log(colorIndex+ "  color index");

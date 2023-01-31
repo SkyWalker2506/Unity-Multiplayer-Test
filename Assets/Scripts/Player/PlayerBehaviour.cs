@@ -41,7 +41,6 @@ public class PlayerBehaviour : NetworkBehaviour
     private void OnMove()
     {
         _moveVector = _playerInputActions.Player.Movement.ReadValue<Vector2>();
-//        Debug.Log(_moveVector);
         if (_moveVector != Vector2.zero)
         {
             _movementLogic.Move(transform.right * _moveVector.x + transform.forward * _moveVector.y);
@@ -51,7 +50,6 @@ public class PlayerBehaviour : NetworkBehaviour
     private void OnLook()
     {
         _lookVector = _playerInputActions.Player.Look.ReadValue<Vector2>();
-//        Debug.Log(_lookVector);
         if (_lookVector != Vector2.zero)
         {
             _lookLogic.Look(_lookVector);
@@ -82,9 +80,14 @@ public class PlayerBehaviour : NetworkBehaviour
     {
         if (_playerInputActions.Player.Fire.WasPressedThisFrame())
         {
-            _weapon.Attack();
+            OnFireServerRpc();
         }
     }
-    
+
+    [ServerRpc]
+    private void OnFireServerRpc()
+    {
+        _weapon.Attack();
+    }    
     
 }

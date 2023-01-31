@@ -22,7 +22,7 @@ public class Bullet : NetworkBehaviour , IDamager
     private void Awake()
     {
         _movementLogic = new TransformMovement(transform, _bulletSpeed);
-        Invoke(nameof(Despawn),_lifeTime);
+        Invoke(nameof(DespawnServerRpc),_lifeTime);
     }
 
     private void Update()
@@ -80,10 +80,11 @@ public class Bullet : NetworkBehaviour , IDamager
     {
         damagable.ApplyDamage(Damage);
         OnDamage?.Invoke(Damage);
-        Despawn();
+        DespawnServerRpc();
     }
-
-    private void Despawn()
+    
+    [ServerRpc(RequireOwnership = false)]
+    void DespawnServerRpc()
     {
         if (IsSpawned)
         {

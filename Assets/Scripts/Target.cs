@@ -13,6 +13,12 @@ public class Target : NetworkBehaviour, INetworkSpawn, IDamagable
 
     public void ApplyDamage(int damage)
     {
+        DespawnServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void DespawnServerRpc()
+    {
         if (IsSpawned)
         {
             NetworkObj.Despawn();
