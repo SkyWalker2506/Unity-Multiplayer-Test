@@ -167,7 +167,7 @@ MonoBehaviour:
     LookCamera: {fileID: 5401301173397950225}
     MovementSpeed: 5
     LookSensitivity: 25
-    LookAngle: {x: -30, y: 30}
+    LookAngle: {x: -10, y: 10}
   _weapon: {fileID: 8039181814750333908}
 --- !u!114 &7037277435875364874
 MonoBehaviour:
