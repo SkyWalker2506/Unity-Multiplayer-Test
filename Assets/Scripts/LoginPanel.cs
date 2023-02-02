@@ -24,8 +24,7 @@ public class LoginPanel : MonoBehaviour
             userName = $"User{Random.Range(0, 10000)}";
         }
 
-        PlayerInfo.UserName = userName;
-        
+        GameInfo.Player.Name = userName;
         OnLogin?.Invoke();
     }
 

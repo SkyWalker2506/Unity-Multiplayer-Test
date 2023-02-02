@@ -6,25 +6,9 @@ public abstract class SpawnBehaviour : NetworkBehaviour
     [SerializeField] private SpawnData _spawnData;
     private ISpawnLogic _spawnLogic;
     
-    private void Start()
-    {
-        if (NetworkManager.Singleton)
-        {        
-            NetworkManager.Singleton.OnServerStarted += Spawn;
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (NetworkManager.Singleton)
-        {
-            NetworkManager.Singleton.OnServerStarted -= Spawn;
-        }
-    }
-
     protected abstract INetworkSpawn NetworkSpawn();
 
-    private void Spawn()
+    public void Spawn()
     {
         if (IsHost)
         {

@@ -8,23 +8,41 @@ namespace Game.Network
     public class ConnectionPanel : MonoBehaviour
     {
         [SerializeField] private TMP_Text _userName;
-        [SerializeField] private Button _serverButton;
         [SerializeField] private Button _hostButton;
         [SerializeField] private Button _clientButton;
 
         private void OnEnable()
         {
-            _userName.SetText(PlayerInfo.UserName);
-            _serverButton.onClick.AddListener(()=>NetworkManager.Singleton.StartServer());
-            _hostButton.onClick.AddListener(()=>NetworkManager.Singleton.StartHost());
-            _clientButton.onClick.AddListener(()=>NetworkManager.Singleton.StartClient());
+            _userName.SetText(GameInfo.Player.Name);
+            _hostButton.onClick.AddListener(OnStartHost);
+            _clientButton.onClick.AddListener(OnStartClient);
         }
 
         private void OnDisable()
         {
-            _serverButton.onClick.RemoveListener(()=>NetworkManager.Singleton.StartServer());
-            _hostButton.onClick.RemoveListener(()=>NetworkManager.Singleton.StartHost());
-            _clientButton.onClick.RemoveListener(()=>NetworkManager.Singleton.StartClient());
+            _hostButton.onClick.RemoveListener(OnStartHost);
+            _clientButton.onClick.RemoveListener(OnStartClient);
+        }
+        
+        private void OnStartHost()
+        {
+            if (NetworkManager.Singleton.StartHost())
+            {
+                Invoke(nameof(CallGameStarted),1);
+            }
+        }
+        
+        private void OnStartClient()
+        {
+            if (NetworkManager.Singleton.StartClient())
+            {
+                Invoke(nameof(CallGameStarted),1);
+            }
+        }
+
+        private void CallGameStarted()
+        {
+            GameEventsManager.OnGameStarted?.Invoke();
         }
     }
 }

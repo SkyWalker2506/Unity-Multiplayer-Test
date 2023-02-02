@@ -14,7 +14,7 @@ namespace CombatSystem
         private int _bulletSizeCount => Enum.GetValues(typeof(BulletSize)).Length;
         private int _bulletColorCount => Enum.GetValues(typeof(BulletColor)).Length;
         BulletData _currentBulletData;
-
+        
         public WeaponLogic(NetworkBehaviour owner, Bullet bulletPrefab, BulletData bulletData, Transform weaponTip)
         {
             _owner = owner;

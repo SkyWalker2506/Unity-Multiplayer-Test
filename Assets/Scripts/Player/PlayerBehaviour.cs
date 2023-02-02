@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerBehaviour : NetworkBehaviour
 {
+
     [SerializeField] private PlayerData _playerData;
     [SerializeField] private Weapon _weapon;
     private PlayerInputActions _playerInputActions;
@@ -93,25 +94,53 @@ public class PlayerBehaviour : NetworkBehaviour
     [ServerRpc]
     private void NextSizeServerRpc()
     {
-        _weapon.NextSize();
+        NextSizeClientRpc();
     }  
     
     [ServerRpc]
     private void PreviousSizeServerRpc()
     {
-        _weapon.PreviousSize();
+        PreviousSizeClientRpc();
     }  
     
     [ServerRpc]
     private void NextColorServerRpc()
     {
-        _weapon.NextColor();
+        NextColorClientRpc();
     }  
     
     [ServerRpc]
     private void PreviousColorServerRpc()
     {
-        _weapon.PreviousColor();
+        PreviousColorClientRpc();
     }  
 
+    [ClientRpc]
+    private void NextSizeClientRpc()
+    {
+        _weapon.NextSize();
+        GameEventsManager.OnBulletChanged?.Invoke();
+    }  
+    
+    [ClientRpc]
+    private void PreviousSizeClientRpc()
+    {
+        _weapon.PreviousSize();
+        GameEventsManager.OnBulletChanged?.Invoke();
+    }  
+    
+    [ClientRpc]
+    private void NextColorClientRpc()
+    {
+        _weapon.NextColor();
+        GameEventsManager.OnBulletChanged?.Invoke();
+    }  
+    
+    [ClientRpc]
+    private void PreviousColorClientRpc()
+    {
+        _weapon.PreviousColor();
+        GameEventsManager.OnBulletChanged?.Invoke();
+    }  
+    
 }

@@ -12,63 +12,50 @@ public class UIManager : NetworkBehaviour
 
     private void Awake()
     {
-        _loginPanel?.gameObject.SetActive(true);
-        _connectionPanel?.SetActive(false);
-        _gamePanel?.SetActive(false);
+        _loginPanel.gameObject.SetActive(true);
+        _connectionPanel.SetActive(false);
+        _gamePanel.SetActive(false);
     }
 
     private void OnEnable()
     {
         _loginPanel.OnLogin += OnLogin;
-        if (NetworkManager.Singleton)
-        {        
-            NetworkManager.Singleton.OnServerStarted += OnServerStarted;
-        }
+        GameEventsManager.OnGameStarted += OnGameStarted;
     }
 
     private void OnDisable()
     {
         _loginPanel.OnLogin -= OnLogin;
-        if (NetworkManager.Singleton)
-        {
-            NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
-
-        }
+        GameEventsManager.OnGameStarted -= OnGameStarted;
     }
     
     private void OnLogin()
     {
-        _loginPanel?.gameObject.SetActive(false);
-        _connectionPanel?.SetActive(true);
-        _gamePanel?.SetActive(false);
-    }
-    private void OnServerStarted()
-    {
-        _connectionPanel?.SetActive(false);
-        _gamePanel?.SetActive(true);
-        AddUserToScorePanelServerRpc(Random.Range(0,100).ToString());
+        _loginPanel.gameObject.SetActive(false);
+        _connectionPanel.SetActive(true);
+        _gamePanel.SetActive(false);
     }
     
-    private void OnClientConnected(ulong id)
+    private void OnGameStarted()
     {
-        Debug.LogWarning("id "+id);
-        _connectionPanel?.SetActive(false);
-        _gamePanel?.SetActive(true);
-        AddUserToScorePanelServerRpc(id.ToString());
+        _connectionPanel.SetActive(false);
+        _gamePanel.SetActive(true);
+        AddUserToScorePanelServerRpc(GameInfo.Player.Name);
     }
-
+    
     [ServerRpc(RequireOwnership = false)]
     private void AddUserToScorePanelServerRpc(string userName)
     {
-        Debug.LogWarning("userName "+userName);
-        //_scorePanel.AddScorePanelObject(userName);
-        AddUserToScorePanelClientRpc(userName);
+        GameInfo.Users.Add(new UserInfo(userName));
+        foreach (var user in GameInfo.Users)
+        {
+            AddUserToScorePanelClientRpc(user.Name);
+        }
     }
     
     [ClientRpc]
     private void AddUserToScorePanelClientRpc(string userName)
     {
-        Debug.LogWarning("userName "+userName);
         _scorePanel.AddScorePanelObject(userName);
     }
 }
