@@ -1,3 +1,4 @@
+using System;
 using CombatSystem;
 using Game.MovementSystem;
 using Unity.Netcode;
@@ -5,6 +6,14 @@ using UnityEngine;
 
 public class PlayerBehaviour : NetworkBehaviour
 {
+    public static PlayerBehaviour Instance;
+    public Action<BulletData> OnBulletDataChanged
+    {
+        get => _weapon.OnBulletDataChanged;
+        set => _weapon.OnBulletDataChanged = value;
+    }
+
+    public BulletData BulletData => _weapon.BulletData;
 
     [SerializeField] private PlayerData _playerData;
     [SerializeField] private Weapon _weapon;
@@ -13,8 +22,9 @@ public class PlayerBehaviour : NetworkBehaviour
     private ILookLogic _lookLogic;
     private Vector2 _moveVector;
     private Vector2 _lookVector;
-    
-    
+
+
+
     private void Awake()
     {
         _playerInputActions = new PlayerInputActions();
@@ -26,6 +36,10 @@ public class PlayerBehaviour : NetworkBehaviour
     private void Start()
     {
         _playerData.LookCamera.gameObject.SetActive(IsOwner);
+        if (IsOwner)
+        {
+            Instance = this;
+        }
     }
 
     private void Update()
@@ -119,28 +133,24 @@ public class PlayerBehaviour : NetworkBehaviour
     private void NextSizeClientRpc()
     {
         _weapon.NextSize();
-        GameEventsManager.OnBulletChanged?.Invoke();
     }  
     
     [ClientRpc]
     private void PreviousSizeClientRpc()
     {
         _weapon.PreviousSize();
-        GameEventsManager.OnBulletChanged?.Invoke();
     }  
     
     [ClientRpc]
     private void NextColorClientRpc()
     {
         _weapon.NextColor();
-        GameEventsManager.OnBulletChanged?.Invoke();
     }  
     
     [ClientRpc]
     private void PreviousColorClientRpc()
     {
         _weapon.PreviousColor();
-        GameEventsManager.OnBulletChanged?.Invoke();
     }  
     
 }

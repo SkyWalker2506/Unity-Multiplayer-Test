@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using System;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace CombatSystem
@@ -9,7 +10,15 @@ namespace CombatSystem
         [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private Transform _weaponTip;
         private IWeaponLogic _weaponLogic;
-        
+        public Action<BulletData> OnBulletDataChanged
+        {
+            get => _weaponLogic.OnBulletDataChanged;
+            set => _weaponLogic.OnBulletDataChanged = value;
+        }
+
+        public BulletData BulletData => _weaponLogic.CurrentBulletData;
+
+
         private void Awake()
         {
             _weaponLogic = new WeaponLogic(_owner,_bulletPrefab, new BulletData(),_weaponTip);

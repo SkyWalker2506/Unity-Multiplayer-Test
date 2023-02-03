@@ -7,16 +7,23 @@ public class BulletPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEventsManager.OnBulletChanged += UpdateBulletText;
+        GameEventsManager.OnGameStarted += SetBulletUpdate;
+    }
+
+    void SetBulletUpdate()
+    {
+        PlayerBehaviour.Instance.OnBulletDataChanged += UpdateBulletText;
+        UpdateBulletText(PlayerBehaviour.Instance.BulletData);
     }
 
     private void OnDisable()
     {
-        GameEventsManager.OnBulletChanged -= UpdateBulletText;
+        PlayerBehaviour.Instance.OnBulletDataChanged -= UpdateBulletText;
+        GameEventsManager.OnGameStarted -= SetBulletUpdate;
     }
 
-    private void UpdateBulletText()
+    private void UpdateBulletText(BulletData bulletData)
     {
-        _bulletText.SetText($"Bullet: Color {GameInfo.Player.CurrentBullet.Color}, Size {GameInfo.Player.CurrentBullet.Size}");
+        _bulletText.SetText($"Bullet: Color {bulletData.Color}, Size {bulletData.Size}");
     }
 }
